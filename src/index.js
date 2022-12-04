@@ -12,5 +12,5 @@ app.use(express.json());
 app.use(poolRoutes);
 app.use(opcoesRoutes);
 
-const port = process.env.PORT || 4444;
+const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`server running in port ${port}`));

@@ -1,9 +1,11 @@
 import { Router } from "express";
 import opcoesController from "../controllers/opcoes.controller.js";
+import confirmVote from "../controllers/votos.controller.js";
+import { opcoesMiddleware, PoolVote } from "../middlewares/opcoes.middleware.js";
 
+const router = Router();
 
-const router = Router()
+router.post("/choice", opcoesMiddleware, opcoesController);
+router.post("/choice/:id/vote", PoolVote, confirmVote);
 
-router.post("/choice", opcoesController)
-
-export default router
+export default router;

@@ -1,10 +1,16 @@
 import { Router } from "express";
 import { PostPool, GetPool } from "../controllers/enquete.controller.js";
-import { PoolValidation } from "../middlewares/enquete.middleware.js";
+import {
+  PoolRequest,
+  PoolRequestOptionList,
+  PoolValidation,
+} from "../middlewares/enquete.middleware.js";
 
 const router = Router();
 
-router.get("/pool", GetPool);
-router.post("/pool", PoolValidation, PostPool);
+router.get("/poll", GetPool);
+router.get("/poll/:id/choice", PoolRequestOptionList);
+router.get("/poll/:id/result", PoolRequest);
+router.post("/poll", PoolValidation, PostPool);
 
 export default router;

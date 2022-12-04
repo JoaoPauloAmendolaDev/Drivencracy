@@ -1,33 +1,24 @@
 import dayjs from "dayjs";
-import { ObjectId } from "mongodb";
-import { enqueteCollection } from "../database/db.js";
+import { opcoesDeVotosCollection } from "../database/db.js";
 
-export default async function opcoesController(req, res, next) {
+export default async function opcoesController(req, res) {
   const { title, pollId } = req.body;
-  console.log(pollId);
+  let momentum = dayjs();
+
+  momentum = momentum.format("YYYY-MM-DD HH:mm");
 
   try {
-    const findThePool = await enqueteCollection.findOne({
-      _id: new ObjectId(pollId),
+    const postOptions = await opcoesDeVotosCollection.insertOne({
+      title,
+      pollId,
+      createdAt: momentum,
     });
-
-    const isRepeated = await enqueteCollection.findOne({ title });
-
-    if (!findThePool || !title) {
-      return res.sendStatus(422);
+    console.log(postOptions);
+    if (postOptions) {
+      res.sendStatus(201);
     }
-
-    if (isRepeated) {
-      return res.sendStatus(409);
-    }
-
-    const thisMoment = dayjs();
-    if (thisMoment.isAfter(findThePool.expireAt)) {
-      return res.sendStatus(403);
-    }
-
-    next();
   } catch (err) {
-    return res.sendStatus(500);
+    console.log(err);
+    res.sendStatus(500);
   }
 }
