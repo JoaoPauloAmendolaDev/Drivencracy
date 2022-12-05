@@ -22,6 +22,16 @@ export async function PoolRequestOptionList(req, res) {
   try {
     console.log("passei aqui");
 
+    const findThePool = await enqueteCollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    console.log(findThePool);
+
+    if (!findThePool) {
+      return res.sendStatus(404);
+    }
+
     const idFinded = await opcoesDeVotosCollection
       .find({
         pollId: id,
