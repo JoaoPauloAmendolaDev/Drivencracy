@@ -20,7 +20,6 @@ export async function PoolRequestOptionList(req, res) {
   console.log(id);
 
   try {
-    console.log("passei aqui");
 
     const findThePool = await enqueteCollection.findOne({
       _id: new ObjectId(id),
@@ -55,9 +54,7 @@ export async function PoolRequest(req, res) {
   let arrayDeVotos = [];
   let bigger = 0;
   let title = "";
-  console.log("entrei na funcão");
   try {
-    console.log("entrei no try");
     const findThePool = await enqueteCollection.findOne({
       _id: new ObjectId(id),
     });
@@ -74,7 +71,6 @@ export async function PoolRequest(req, res) {
       });
 
       const allVotes = await votosCollection.find({}).toArray();
-      console.log(allVotes);
 
       const allVotesFiltered = allVotes.map((item) => {
         if (arrayDeTitles.includes(item.title)) {
